@@ -52,7 +52,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../openapi.yaml#/components/schemas/ApiError
+            $ref: ../openapi.yaml#/components/schemas/DeviceError
           examples:
             invalidToken:
               summary: Jeton utilisateur invalide

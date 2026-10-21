@@ -32,7 +32,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: ../openapi.yaml#/components/schemas/ApiError
+            $ref: ../openapi.yaml#/components/schemas/LoginError
           examples:
             wrongCredentials:
               summary: Identifiants incorrects

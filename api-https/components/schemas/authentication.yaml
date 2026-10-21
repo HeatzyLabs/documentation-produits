@@ -36,8 +36,9 @@ LoginSuccess:
       description: Date d'expiration du jeton, en secondes Unix.
       example: 1801237261
 
-ApiError:
+LoginError:
   type: object
+  description: Erreur renvoyée par l'endpoint de connexion.
   required:
     - error_message
     - error_code

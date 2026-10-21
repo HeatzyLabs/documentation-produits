@@ -31,9 +31,11 @@ components:
       $ref: ./components/schemas/authentication.yaml#/LoginRequest
     LoginSuccess:
       $ref: ./components/schemas/authentication.yaml#/LoginSuccess
-    ApiError:
-      $ref: ./components/schemas/authentication.yaml#/ApiError
-    DeviceListResponse:
-      $ref: ./components/schemas/devices.yaml#/DeviceListResponse
+    LoginError:
+      $ref: ./components/schemas/authentication.yaml#/LoginError
     Device:
       $ref: ./components/schemas/devices.yaml#/Device
+    DeviceListResponse:
+      $ref: ./components/schemas/devices.yaml#/DeviceListResponse
+    DeviceError:
+      $ref: ./components/schemas/devices.yaml#/DeviceError
