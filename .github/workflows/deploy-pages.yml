@@ -1,0 +1,61 @@
+name: Deploy documentation to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby and install dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: api-produits
+
+      - name: Build product documentation
+        run: >-
+          bundle exec jekyll build
+          --source api-produits
+          --destination _site
+          --url https://heatzylabs.github.io
+          --baseurl /documentation-produits
+
+      # Preserve the OpenAPI specifications and Swagger UI assets alongside
+      # the Jekyll-generated product documentation when that directory exists.
+      - name: Include HTTPS API documentation
+        run: |
+          if [ -d api-https ]; then
+            mkdir -p _site/api-https
+            cp -R api-https/. _site/api-https/
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
