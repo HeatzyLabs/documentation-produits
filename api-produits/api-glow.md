@@ -1,4 +1,7 @@
-# ![][image1]
+---
+title: API du Glow et du Shine
+nav_order: 4
+---
 
 # Heatzy Glow et Shine : Description des points de données
 

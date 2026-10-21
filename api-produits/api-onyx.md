@@ -1,4 +1,7 @@
-# ![][image1]
+---
+title: API du Onyx
+nav_order: 5
+---
 
 # Heatzy Onyx : Description des points de données
 

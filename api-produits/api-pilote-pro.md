@@ -1,4 +1,7 @@
-# ![][image1]
+---
+title: API du Pilote Pro
+nav_order: 3
+---
 
 # Heatzy Pilote Pro : Description des points de données
 
