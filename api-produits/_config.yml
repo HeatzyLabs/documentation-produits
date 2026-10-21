@@ -1,6 +1,7 @@
 title: Documentation produits Heatzy
 description: Documentation technique des produits Heatzy.
 theme: just-the-docs
+color_scheme: heatzy
 
 url: "https://heatzylabs.github.io"
 baseurl: "/documentation-produits"
