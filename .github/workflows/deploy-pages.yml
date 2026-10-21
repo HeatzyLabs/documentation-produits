@@ -31,8 +31,13 @@ jobs:
       - name: Build product documentation
         run: >-
           bundle exec jekyll build
-          --destination ../_site
+          --destination ../_site/api-produits
         working-directory: api-produits
+
+      - name: Include documentation home page
+        run: |
+          mkdir -p _site
+          cp index.html styles.css _site/
 
       # Preserve the OpenAPI specifications and Swagger UI assets alongside
       # the Jekyll-generated product documentation when that directory exists.
