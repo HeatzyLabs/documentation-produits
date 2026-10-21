@@ -31,10 +31,10 @@ jobs:
       - name: Build product documentation
         run: >-
           bundle exec jekyll build
-          --source api-produits
-          --destination _site
+          --destination ../_site
           --url https://heatzylabs.github.io
           --baseurl /documentation-produits
+        working-directory: api-produits
 
       # Preserve the OpenAPI specifications and Swagger UI assets alongside
       # the Jekyll-generated product documentation when that directory exists.
