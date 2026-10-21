@@ -10,6 +10,15 @@ paths:
   /app/login:
     $ref: ./paths/authentication.yaml
 components:
+  securitySchemes:
+    GizwitsApplicationId:
+      type: apiKey
+      in: header
+      name: X-Gizwits-Application-Id
+      description: |
+        Identifiant public de l'application Heatzy auprès de Gizwits.
+
+        Valeur : `c70a66ff039d41b4a220e198b0fcc8b3`
   schemas:
     LoginRequest:
       $ref: ./components/schemas/authentication.yaml#/LoginRequest

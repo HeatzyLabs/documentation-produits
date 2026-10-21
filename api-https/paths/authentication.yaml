@@ -2,8 +2,11 @@ post:
   tags:
     - Authentification
   summary: Se connecter
-  description: Authentifie un utilisateur et renvoie son jeton d'accès.
+  description: |
+    Authentifie un utilisateur et renvoie son jeton d'accès.
   operationId: login
+  security:
+    - GizwitsApplicationId: []
   requestBody:
     required: true
     content:
