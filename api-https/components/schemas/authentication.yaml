@@ -1,0 +1,54 @@
+LoginRequest:
+  type: object
+  required:
+    - username
+    - password
+  properties:
+    username:
+      type: string
+      format: email
+      description: Adresse e-mail du compte utilisateur.
+      example: utilisateur@exemple.com
+    password:
+      type: string
+      format: password
+      description: Mot de passe du compte utilisateur.
+      example: mot-de-passe
+
+LoginSuccess:
+  type: object
+  required:
+    - token
+    - uid
+    - expire_at
+  properties:
+    token:
+      type: string
+      description: Jeton d'accès à transmettre aux requêtes authentifiées.
+      example: 433b1af864254403be7ae58424ec13dd
+    uid:
+      type: string
+      description: Identifiant unique de l'utilisateur.
+      example: 8e34df3867554ea0b78de7107bccbb9c
+    expire_at:
+      type: integer
+      format: int64
+      description: Date d'expiration du jeton, en secondes Unix.
+      example: 1801237261
+
+ApiError:
+  type: object
+  required:
+    - error_message
+    - error_code
+  properties:
+    error_message:
+      type: string
+      description: Message d'erreur lisible.
+    error_code:
+      type: integer
+      description: Code d'erreur Gizwits.
+    detail_message:
+      type: string
+      nullable: true
+      description: Message détaillé éventuellement fourni par Gizwits.

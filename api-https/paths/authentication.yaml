@@ -1,0 +1,45 @@
+post:
+  tags:
+    - Authentification
+  summary: Se connecter
+  description: Authentifie un utilisateur et renvoie son jeton d'accès.
+  operationId: login
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../openapi.yaml#/components/schemas/LoginRequest
+        example:
+          username: utilisateur@exemple.com
+          password: mot-de-passe
+  responses:
+    "200":
+      description: Authentification réussie.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/LoginSuccess
+          example:
+            token: abcd1234xxxxxxxxxxxxxxxxxxx
+            uid: efgh5678xxxxxxxxxxxxxxxxxxx
+            expire_at: 1801237261
+    "400":
+      description: Requête invalide, identifiants incorrects ou appId invalide.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          examples:
+            wrongCredentials:
+              summary: Identifiants incorrects
+              value:
+                error_message: username or password error!
+                error_code: 9020
+                detail_message: 账号或者密码错误
+            invalidAppId:
+              summary: appId invalide
+              value:
+                error_message: appid invalid!
+                error_code: 9003
+                detail_message: null

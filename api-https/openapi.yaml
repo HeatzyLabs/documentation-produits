@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  title: API HTTPS Heatzy
+  description: Documentation de l'API HTTPS Heatzy, hébergée sur la plateforme Gizwits.
+  version: 1.0.0
+servers:
+  - url: https://euapi.gizwits.com
+    description: Serveur Europe Gizwits
+paths:
+  /app/login:
+    $ref: ./paths/authentication.yaml
+components:
+  schemas:
+    LoginRequest:
+      $ref: ./components/schemas/authentication.yaml#/LoginRequest
+    LoginSuccess:
+      $ref: ./components/schemas/authentication.yaml#/LoginSuccess
+    ApiError:
+      $ref: ./components/schemas/authentication.yaml#/ApiError
