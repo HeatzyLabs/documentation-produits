@@ -3,6 +3,13 @@ description: Documentation technique des produits Heatzy.
 theme: just-the-docs
 color_scheme: heatzy
 
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
 url: "https://heatzylabs.github.io"
 baseurl: "/documentation-produits"
 
