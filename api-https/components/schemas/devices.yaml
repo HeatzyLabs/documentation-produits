@@ -1,0 +1,36 @@
+BindingsResponse:
+  type: object
+  required:
+    - devices
+  properties:
+    devices:
+      type: array
+      description: Appareils associés au compte.
+      items:
+        $ref: '#/Device'
+
+Device:
+  type: object
+  description: Informations d'un appareil renvoyées par Gizwits.
+  additionalProperties: true
+  properties:
+    did:
+      type: string
+      description: Identifiant unique de l'appareil.
+      example: example-device-id
+    product_key:
+      type: string
+      description: Identifiant du produit Gizwits.
+      example: example-product-key
+    product_name:
+      type: string
+      description: Nom du produit.
+      example: Glow_Simple_ble
+    dev_alias:
+      type: string
+      description: Nom attribué à l'appareil par l'utilisateur.
+      example: Radiateur salon
+    is_online:
+      type: boolean
+      description: Indique si l'appareil est actuellement en ligne.
+      example: true

@@ -9,6 +9,8 @@ servers:
 paths:
   /app/login:
     $ref: ./paths/authentication.yaml
+  /app/bindings:
+    $ref: ./paths/devices.yaml
 components:
   securitySchemes:
     GizwitsApplicationId:
@@ -19,6 +21,11 @@ components:
         Identifiant public de l'application Heatzy auprès de Gizwits.
 
         Valeur : `c70a66ff039d41b4a220e198b0fcc8b3`
+    GizwitsUserToken:
+      type: apiKey
+      in: header
+      name: X-Gizwits-User-token
+      description: Jeton utilisateur obtenu avec `POST /app/login`.
   schemas:
     LoginRequest:
       $ref: ./components/schemas/authentication.yaml#/LoginRequest
@@ -26,3 +33,7 @@ components:
       $ref: ./components/schemas/authentication.yaml#/LoginSuccess
     ApiError:
       $ref: ./components/schemas/authentication.yaml#/ApiError
+    BindingsResponse:
+      $ref: ./components/schemas/devices.yaml#/BindingsResponse
+    Device:
+      $ref: ./components/schemas/devices.yaml#/Device

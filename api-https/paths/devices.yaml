@@ -1,0 +1,68 @@
+get:
+  tags:
+    - Appareils
+  summary: Lister les appareils associés au compte
+  description: Renvoie les appareils liés au compte de l'utilisateur authentifié.
+  operationId: listBindings
+  security:
+    - GizwitsApplicationId: []
+      GizwitsUserToken: []
+  parameters:
+    - name: limit
+      in: query
+      description: Nombre maximal d'appareils à renvoyer.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 20
+      example: 20
+    - name: skip
+      in: query
+      description: Nombre d'appareils à ignorer pour la pagination.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+      example: 0
+  responses:
+    "200":
+      description: Liste des appareils associés au compte.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/BindingsResponse
+          example:
+            devices:
+              - did: example-device-id
+                mac: mac-address
+                product_key: 46409c7f29d4411c85a3a46e5ee3703e
+                product_name: Pilote_Soc_C3
+                dev_alias: Radiateur salon
+                is_online: true
+              - did: example-device-id
+                mac: mac-address
+                product_key: a77a929fcf0d4631bc4f669080376891
+                product_name: Pilote_Pro
+                dev_alias: Radiateur chambre
+                is_online: true
+    "400":
+      description: Jeton utilisateur absent ou invalide. Identifiant d'application invalide.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/ApiError
+          examples:
+            invalidToken:
+              summary: Jeton utilisateur invalide
+              value:
+                error_message: token invalid!
+                error_code: 9004
+                detail_message: null
+            invalidAppId:
+              summary: Identifiant d'application invalide
+              value:
+                error_message: appid invalid!
+                error_code: 9003
+                detail_message: null
