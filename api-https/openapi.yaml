@@ -33,7 +33,7 @@ components:
       $ref: ./components/schemas/authentication.yaml#/LoginSuccess
     ApiError:
       $ref: ./components/schemas/authentication.yaml#/ApiError
-    BindingsResponse:
-      $ref: ./components/schemas/devices.yaml#/BindingsResponse
+    DeviceListResponse:
+      $ref: ./components/schemas/devices.yaml#/DeviceListResponse
     Device:
       $ref: ./components/schemas/devices.yaml#/Device

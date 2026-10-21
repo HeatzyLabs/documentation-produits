@@ -32,7 +32,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../openapi.yaml#/components/schemas/BindingsResponse
+            $ref: ../openapi.yaml#/components/schemas/DeviceListResponse
           example:
             devices:
               - did: example-device-id

@@ -1,4 +1,4 @@
-BindingsResponse:
+DeviceListResponse:
   type: object
   required:
     - devices
