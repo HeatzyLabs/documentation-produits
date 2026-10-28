@@ -66,3 +66,25 @@ get:
                 error_message: appid invalid!
                 error_code: 9003
                 detail_message: null
+
+delete:
+  tags:
+    - Appareils
+  summary: Retirer des appareils du compte
+  description: Retire un ou plusieurs appareils associés au compte de l'utilisateur.
+  operationId: removeDeviceBindings
+  security:
+    - GizwitsApplicationId: []
+      GizwitsUserToken: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../openapi.yaml#/components/schemas/RemoveDeviceBindingsRequest
+        example:
+          devices:
+            - did: YVAPcxDcvteIFNbXPnKgrZ
+  responses:
+    default:
+      description: Réponse à documenter après le premier appel de test.

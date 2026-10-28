@@ -1,0 +1,30 @@
+get:
+  tags:
+    - Appareils
+  summary: Récupérer le dernier état d'un appareil
+  description: Renvoie le dernier état connu et les points de données d'un appareil.
+  operationId: getLatestDeviceState
+  security:
+    - GizwitsApplicationId: []
+      GizwitsUserToken: []
+  parameters:
+    - name: did
+      in: path
+      description: Identifiant unique de l'appareil.
+      required: true
+      schema:
+        type: string
+      example: kbWS4yHv0ERiaUEYOITc8g
+  responses:
+    '200':
+      description: Dernier état connu de l'appareil.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/DeviceStateResponse
+          example:
+            did: kbWS4yHv0ERiaUEYOITc8g
+            updated_at: 1801237261
+            attr:
+              on_off: 1
+              mode: 0

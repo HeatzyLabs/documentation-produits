@@ -1,0 +1,35 @@
+post:
+  tags:
+    - Appareils
+  summary: Envoyer une commande à un appareil
+  description: Envoie une ou plusieurs valeurs de points de données à un appareil.
+  operationId: controlDevice
+  security:
+    - GizwitsApplicationId: []
+      GizwitsUserToken: []
+  parameters:
+    - name: did
+      in: path
+      description: Identifiant unique de l'appareil.
+      required: true
+      schema:
+        type: string
+      example: YVAPcxDcvteIFNbXPnKgrZ
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../openapi.yaml#/components/schemas/DeviceControlRequest
+        example:
+          attrs:
+            mode: 2
+  responses:
+    '200':
+      description: Commande acceptée par le serveur.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+          example: {}

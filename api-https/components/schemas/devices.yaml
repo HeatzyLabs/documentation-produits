@@ -54,3 +54,61 @@ DeviceError:
       type: string
       nullable: true
       description: Message détaillé éventuellement fourni par Gizwits.
+
+DeviceStateResponse:
+  type: object
+  description: Dernier état connu et points de données d'un appareil.
+  required:
+    - did
+    - updated_at
+    - attr
+  properties:
+    did:
+      type: string
+      description: Identifiant unique de l'appareil.
+      example: kbWS4yHv0ERiaUEYOITc8g
+    updated_at:
+      type: integer
+      format: int64
+      description: Horodatage de la dernière mise à jour, en secondes Unix.
+      example: 1801237261
+    attr:
+      type: object
+      description: |
+        Points de données de l'appareil. Leur structure dépend du produit.
+        Consulte la documentation de chaque produit pour leur signification.
+      additionalProperties: true
+
+DeviceControlRequest:
+  type: object
+  description: Commande envoyée à un appareil.
+  required:
+    - attrs
+  properties:
+    attrs:
+      type: object
+      description: |
+        Points de données à modifier et leurs nouvelles valeurs.
+        Les clés et valeurs autorisées dépendent du produit.
+      additionalProperties: true
+      example:
+        mode: 2
+
+RemoveDeviceBindingsRequest:
+  type: object
+  description: Liste des appareils à retirer du compte.
+  required:
+    - devices
+  properties:
+    devices:
+      type: array
+      minItems: 1
+      items:
+        type: object
+        required:
+          - did
+        properties:
+          did:
+            type: string
+            description: Identifiant unique de l'appareil à retirer.
+            example: YVAPcxDcvteIFNbXPnKgrZ
