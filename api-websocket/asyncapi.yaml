@@ -1,0 +1,115 @@
+asyncapi: 3.0.0
+info:
+  title: API WebSocket Heatzy
+  description: |
+    Documentation du protocole WebSocket Heatzy.
+
+    Cette spécification décrit les échanges temps réel en JSON.
+  version: 0.1.0
+defaultContentType: application/json
+servers:
+  gizwits:
+    host: eum2m.gizwits.com:8880
+    pathname: /ws/app/v1
+    protocol: wss
+    title: Passerelle Gizwits
+    description: |
+      Passerelle WebSocket sécurisée Gizwits pour l'infrastructure Europe.
+      URL : `wss://eum2m.gizwits.com:8880/ws/app/v1`.
+channels:
+  websocketSession:
+    address: null
+    title: Session WebSocket
+    description: Login
+    messages:
+      loginRequest:
+        $ref: "#/components/messages/LoginRequest"
+      loginResponse:
+        $ref: "#/components/messages/LoginResponse"
+operations:
+  sendLoginRequest:
+    action: send
+    channel:
+      $ref: "#/channels/websocketSession"
+    summary: Authentifier la connexion WebSocket.
+    messages:
+      - $ref: "#/channels/websocketSession/messages/loginRequest"
+  receiveLoginResponse:
+    action: receive
+    channel:
+      $ref: "#/channels/websocketSession"
+    summary: Recevoir le résultat de l'authentification.
+    messages:
+      - $ref: "#/channels/websocketSession/messages/loginResponse"
+components:
+  messages:
+    LoginRequest:
+      name: login_req
+      title: Demande de connexion
+      summary: Authentifie l'utilisateur auprès de la passerelle Gizwits.
+      payload:
+        type: object
+        required:
+          - cmd
+          - data
+        properties:
+          cmd:
+            type: string
+            const: login_req
+          data:
+            type: object
+            required:
+              - appid
+              - uid
+              - token
+              - p0_type
+            properties:
+              appid:
+                type: string
+                description: Identifiant public de l'application Heatzy auprès de Gizwits.
+                default: c70a66ff039d41b4a220e198b0fcc8b3
+              uid:
+                type: string
+                description: Identifiant utilisateur obtenu avec l'API HTTPS.
+                examples:
+                  - "<uid>"
+              token:
+                type: string
+                description: Jeton utilisateur obtenu avec l'API HTTPS.
+                examples:
+                  - "<token>"
+              p0_type:
+                type: string
+                const: attrs_v4
+                description: Protocole de data points utilisé par les produits Heatzy.
+              heartbeat_interval:
+                type: integer
+                description: Intervalle de heartbeat en secondes, au plus égal à 180.
+                minimum: 1
+                maximum: 180
+                default: 60
+              auto_subscribe:
+                type: boolean
+                description: Active l'abonnement automatique à tous les appareils liés.
+                default: false
+    LoginResponse:
+      name: login_res
+      title: Résultat de connexion
+      summary: Indique si l'authentification WebSocket a réussi.
+      payload:
+        type: object
+        required:
+          - cmd
+          - data
+        properties:
+          cmd:
+            type: string
+            const: login_res
+          data:
+            type: object
+            required:
+              - success
+            properties:
+              success:
+                type: boolean
+                description: "`true` si l'authentification a réussi."

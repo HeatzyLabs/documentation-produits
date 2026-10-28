@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>API WebSocket Heatzy</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@asyncapi/react-component@3.2.1/styles/default.min.css"
+    >
+  </head>
+  <body>
+    <main id="asyncapi" aria-label="Documentation de l'API WebSocket Heatzy"></main>
+
+    <script src="https://unpkg.com/@asyncapi/react-component@3.2.1/browser/standalone/index.js"></script>
+    <script>
+      AsyncApiStandalone.render(
+        {
+          schema: {
+            url: "./asyncapi.yaml",
+            options: { method: "GET" },
+          },
+          config: {
+            show: { sidebar: true },
+          },
+        },
+        document.getElementById("asyncapi"),
+      );
+    </script>
+  </body>
+</html>
