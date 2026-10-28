@@ -1,0 +1,123 @@
+UserInfo:
+  type: object
+  description: Informations du compte utilisateur Gizwits.
+  required:
+    - uid
+    - is_anonymous
+    - username
+    - email
+    - phone
+    - name
+    - gender
+    - birthday
+    - address
+    - remark
+    - lang
+  properties:
+    uid:
+      type: string
+      description: Identifiant unique de l'utilisateur.
+      example: example-user-id
+    is_anonymous:
+      type: boolean
+      description: Indique si le compte est anonyme.
+      example: false
+    username:
+      type: string
+      nullable: true
+      description: Nom d'utilisateur.
+    email:
+      type: string
+      format: email
+      nullable: true
+      description: Adresse e-mail du compte.
+      example: utilisateur@exemple.com
+    phone:
+      type: string
+      nullable: true
+      description: Numéro de téléphone associé au compte.
+    name:
+      type: string
+      nullable: true
+      description: Nom affiché de l'utilisateur.
+    gender:
+      type: string
+      nullable: true
+      description: Genre renseigné par l'utilisateur.
+    birthday:
+      type: string
+      nullable: true
+      description: Date de naissance renseignée par l'utilisateur.
+    address:
+      type: string
+      nullable: true
+      description: Adresse renseignée par l'utilisateur.
+    remark:
+      type: string
+      nullable: true
+      description: Remarque associée au compte.
+    lang:
+      type: string
+      description: Langue préférée de l'utilisateur.
+      example: en
+
+UserError:
+  type: object
+  description: Erreur renvoyée par les endpoints liés aux utilisateurs.
+  required:
+    - error_message
+    - error_code
+  properties:
+    error_message:
+      type: string
+      description: Message d'erreur lisible.
+      example: token invalid!
+    error_code:
+      type: integer
+      description: Code d'erreur Gizwits.
+      example: 9004
+    detail_message:
+      type: string
+      nullable: true
+      description: Message détaillé éventuellement fourni par Gizwits.
+
+UserPasswordChangeRequest:
+  type: object
+  description: Ancien et nouveau mot de passe du compte utilisateur.
+  required:
+    - old_pwd
+    - new_pwd
+  properties:
+    old_pwd:
+      type: string
+      format: password
+      description: Mot de passe actuel.
+      example: ancien-mot-de-passe
+    new_pwd:
+      type: string
+      format: password
+      description: Nouveau mot de passe.
+      example: nouveau-mot-de-passe
+
+PasswordResetRequest:
+  type: object
+  description: Adresse e-mail du compte dont le mot de passe doit être réinitialisé.
+  required:
+    - email
+  properties:
+    email:
+      type: string
+      format: email
+      description: Adresse e-mail associée au compte.
+      example: utilisateur@exemple.com
+
+UserPasswordChangeResponse:
+  type: object
+  description: Confirmation de modification du mot de passe.
+  required:
+    - updatedAt
+  properties:
+    updatedAt:
+      type: string
+      description: Date et heure de mise à jour renvoyées par Gizwits.
+      example: '2026-10-28T07:13:58.381131'

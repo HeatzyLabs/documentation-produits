@@ -15,6 +15,10 @@ paths:
     $ref: ./paths/device-data.yaml
   /app/control/{did}:
     $ref: ./paths/device-control.yaml
+  /app/users:
+    $ref: ./paths/users.yaml
+  /app/reset_password:
+    $ref: ./paths/password-reset.yaml
 components:
   securitySchemes:
     GizwitsApplicationId:
@@ -49,3 +53,13 @@ components:
       $ref: ./components/schemas/devices.yaml#/DeviceControlRequest
     RemoveDeviceBindingsRequest:
       $ref: ./components/schemas/devices.yaml#/RemoveDeviceBindingsRequest
+    UserInfo:
+      $ref: ./components/schemas/users.yaml#/UserInfo
+    UserError:
+      $ref: ./components/schemas/users.yaml#/UserError
+    UserPasswordChangeRequest:
+      $ref: ./components/schemas/users.yaml#/UserPasswordChangeRequest
+    PasswordResetRequest:
+      $ref: ./components/schemas/users.yaml#/PasswordResetRequest
+    UserPasswordChangeResponse:
+      $ref: ./components/schemas/users.yaml#/UserPasswordChangeResponse

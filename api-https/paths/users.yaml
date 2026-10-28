@@ -1,0 +1,75 @@
+get:
+  tags:
+    - Utilisateurs
+  summary: Obtenir les informations du compte
+  description: Renvoie les informations du compte associé au jeton utilisateur.
+  operationId: getUserInfo
+  security:
+    - GizwitsApplicationId: []
+      GizwitsUserToken: []
+  responses:
+    '200':
+      description: Informations du compte utilisateur.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/UserInfo
+          example:
+            uid: example-user-id
+            is_anonymous: false
+            username: null
+            email: utilisateur@exemple.com
+            phone: null
+            name: null
+            gender: null
+            birthday: null
+            address: null
+            remark: null
+            lang: en
+    '400':
+      description: Jeton utilisateur ou identifiant d'application invalide.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/UserError
+          examples:
+            invalidToken:
+              summary: Jeton utilisateur invalide
+              value:
+                error_message: token invalid!
+                error_code: 9004
+                detail_message: null
+            invalidAppId:
+              summary: Identifiant d'application invalide
+              value:
+                error_message: appid invalid!
+                error_code: 9003
+                detail_message: null
+
+put:
+  tags:
+    - Utilisateurs
+  summary: Changer le mot de passe
+  description: Remplace le mot de passe du compte associé au jeton utilisateur.
+  operationId: changeUserPassword
+  security:
+    - GizwitsApplicationId: []
+      GizwitsUserToken: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../openapi.yaml#/components/schemas/UserPasswordChangeRequest
+        example:
+          old_pwd: ancien-mot-de-passe
+          new_pwd: nouveau-mot-de-passe
+  responses:
+    '200':
+      description: Mot de passe mis à jour.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/UserPasswordChangeResponse
+          example:
+            updatedAt: '2026-10-28T07:13:58.381131'
