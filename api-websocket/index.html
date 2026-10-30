@@ -13,20 +13,77 @@
   <body>
     <main id="asyncapi" aria-label="Documentation de l'API WebSocket Heatzy"></main>
 
+    <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script src="https://unpkg.com/@asyncapi/react-component@3.2.1/browser/standalone/index.js"></script>
     <script>
-      AsyncApiStandalone.render(
-        {
-          schema: {
-            url: "./asyncapi.yaml",
-            options: { method: "GET" },
+      const target = document.getElementById("asyncapi");
+
+      async function loadYaml(path) {
+        const response = await fetch(path);
+        if (!response.ok) {
+          throw new Error(`Impossible de charger ${path} (${response.status}).`);
+        }
+        return jsyaml.load(await response.text());
+      }
+
+      async function renderDocumentation() {
+        const [specification, authentication, subscriptions, authenticationComponents, subscriptionComponents] = await Promise.all([
+          loadYaml("./asyncapi.yaml"),
+          loadYaml("./paths/authentication.yaml"),
+          loadYaml("./paths/subscriptions.yaml"),
+          loadYaml("./components/authentication.yaml"),
+          loadYaml("./components/subscriptions.yaml"),
+        ]);
+
+        specification.components = {
+          messages: {
+            LoginRequest: authenticationComponents.LoginRequest,
+            LoginResponse: authenticationComponents.LoginResponse,
+            SubscribeRequest: subscriptionComponents.SubscribeRequest,
+            SubscribeResponse: subscriptionComponents.SubscribeResponse,
           },
-          config: {
-            show: { sidebar: true },
+          schemas: {
+            SubscriptionResult: subscriptionComponents.SubscriptionResult,
           },
-        },
-        document.getElementById("asyncapi"),
-      );
+        };
+
+        specification.operations = {
+          ...authentication,
+          ...subscriptions,
+        };
+
+        const operationMessages = {
+          sendLoginRequest: "loginRequest",
+          receiveLoginResponse: "loginResponse",
+          sendSubscribeRequest: "subscribeRequest",
+          receiveSubscribeResponse: "subscribeResponse",
+        };
+
+        for (const [operationId, messageId] of Object.entries(operationMessages)) {
+          const operation = specification.operations[operationId];
+          operation.channel.$ref = "#/channels/websocketSession";
+          operation.messages[0].$ref = `#/channels/websocketSession/messages/${messageId}`;
+        }
+
+        for (const result of [
+          specification.components.messages.SubscribeResponse.payload.properties.data.properties.success,
+          specification.components.messages.SubscribeResponse.payload.properties.data.properties.failed,
+        ]) {
+          result.items.$ref = "#/components/schemas/SubscriptionResult";
+        }
+
+        AsyncApiStandalone.render(
+          {
+            schema: specification,
+            config: { show: { sidebar: true } },
+          },
+          target,
+        );
+      }
+
+      renderDocumentation().catch((error) => {
+        target.textContent = `Impossible d'afficher la documentation : ${error.message}`;
+      });
     </script>
   </body>
 </html>

@@ -32,177 +32,23 @@ channels:
         $ref: "#/components/messages/SubscribeResponse"
 operations:
   sendLoginRequest:
-    action: send
-    channel:
-      $ref: "#/channels/websocketSession"
-    summary: Authentifier la connexion WebSocket.
-    messages:
-      - $ref: "#/channels/websocketSession/messages/loginRequest"
+    $ref: "./paths/authentication.yaml#/sendLoginRequest"
   receiveLoginResponse:
-    action: receive
-    channel:
-      $ref: "#/channels/websocketSession"
-    summary: Recevoir le résultat de l'authentification.
-    messages:
-      - $ref: "#/channels/websocketSession/messages/loginResponse"
+    $ref: "./paths/authentication.yaml#/receiveLoginResponse"
   sendSubscribeRequest:
-    action: send
-    channel:
-      $ref: "#/channels/websocketSession"
-    summary: S'abonner aux notifications d'un ou plusieurs appareils.
-    messages:
-      - $ref: "#/channels/websocketSession/messages/subscribeRequest"
+    $ref: "./paths/subscriptions.yaml#/sendSubscribeRequest"
   receiveSubscribeResponse:
-    action: receive
-    channel:
-      $ref: "#/channels/websocketSession"
-    summary: Recevoir le résultat des abonnements demandés.
-    messages:
-      - $ref: "#/channels/websocketSession/messages/subscribeResponse"
+    $ref: "./paths/subscriptions.yaml#/receiveSubscribeResponse"
 components:
   messages:
     LoginRequest:
-      name: login_req
-      title: Demande de connexion
-      summary: Authentifie l'utilisateur auprès de la passerelle Gizwits.
-      payload:
-        type: object
-        required:
-          - cmd
-          - data
-        properties:
-          cmd:
-            type: string
-            const: login_req
-          data:
-            type: object
-            required:
-              - appid
-              - uid
-              - token
-              - p0_type
-            properties:
-              appid:
-                type: string
-                description: Identifiant public de l'application Heatzy auprès de Gizwits.
-                default: c70a66ff039d41b4a220e198b0fcc8b3
-              uid:
-                type: string
-                description: Identifiant utilisateur obtenu avec l'API HTTPS.
-                examples:
-                  - example-user-id
-              token:
-                type: string
-                description: Jeton utilisateur obtenu avec l'API HTTPS.
-                examples:
-                  - example-user-token
-              p0_type:
-                type: string
-                const: attrs_v4
-                description: Protocole de data points utilisé par les produits Heatzy.
-              heartbeat_interval:
-                type: integer
-                description: Intervalle de heartbeat en secondes, au plus égal à 180.
-                minimum: 1
-                maximum: 180
-                default: 60
-              auto_subscribe:
-                type: boolean
-                description: Active l'abonnement automatique à tous les appareils liés.
-                default: false
+      $ref: "./components/authentication.yaml#/LoginRequest"
     LoginResponse:
-      name: login_res
-      title: Résultat de connexion
-      summary: Indique si l'authentification WebSocket a réussi.
-      payload:
-        type: object
-        required:
-          - cmd
-          - data
-        properties:
-          cmd:
-            type: string
-            const: login_res
-          data:
-            type: object
-            required:
-              - success
-            properties:
-              success:
-                type: boolean
-                description: "`true` si l'authentification a réussi."
+      $ref: "./components/authentication.yaml#/LoginResponse"
     SubscribeRequest:
-      name: subscribe_req
-      title: Demande d'abonnement
-      summary: Abonne la connexion aux notifications d'un ou plusieurs appareils.
-      payload:
-        type: object
-        required:
-          - cmd
-          - data
-        properties:
-          cmd:
-            type: string
-            const: subscribe_req
-          data:
-            type: array
-            minItems: 1
-            items:
-              type: object
-              required:
-                - did
-              properties:
-                did:
-                  type: string
-                  description: Identifiant unique de l'appareil auquel s'abonner.
-                  examples:
-                    - example-device-id
+      $ref: "./components/subscriptions.yaml#/SubscribeRequest"
     SubscribeResponse:
-      name: subscribe_res
-      title: Résultat d'abonnement
-      summary: Retourne les appareils auxquels la connexion est abonnée ou non.
-      payload:
-        type: object
-        required:
-          - cmd
-          - data
-        properties:
-          cmd:
-            type: string
-            const: subscribe_res
-          data:
-            type: object
-            properties:
-              success:
-                type: array
-                description: Appareils abonnés avec succès.
-                items:
-                  $ref: "#/components/schemas/SubscriptionResult"
-              failed:
-                type: array
-                description: Appareils dont l'abonnement a échoué.
-                items:
-                  $ref: "#/components/schemas/SubscriptionResult"
+      $ref: "./components/subscriptions.yaml#/SubscribeResponse"
   schemas:
     SubscriptionResult:
-      type: object
-      required:
-        - did
-        - error_code
-        - msg
-      properties:
-        did:
-          type: string
-          description: Identifiant unique de l'appareil.
-          examples:
-            - "example-device-id"
-        error_code:
-          type: integer
-          description: "Code de résultat ; `0` indique un abonnement réussi."
-          examples:
-            - 0
-        msg:
-          type: string
-          description: Message associé au résultat.
-          examples:
-            - example-message
+      $ref: "./components/subscriptions.yaml#/SubscriptionResult"

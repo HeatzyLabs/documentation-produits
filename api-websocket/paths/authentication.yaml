@@ -1,0 +1,14 @@
+sendLoginRequest:
+  action: send
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Authentifier la connexion WebSocket.
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/loginRequest"
+receiveLoginResponse:
+  action: receive
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Recevoir le résultat de l'authentification.
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/loginResponse"

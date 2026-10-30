@@ -1,0 +1,74 @@
+SubscribeRequest:
+  name: subscribe_req
+  title: Demande d'abonnement
+  summary: Abonne la connexion aux notifications d'un ou plusieurs appareils.
+  payload:
+    type: object
+    required:
+      - cmd
+      - data
+    properties:
+      cmd:
+        type: string
+        const: subscribe_req
+      data:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          required:
+            - did
+          properties:
+            did:
+              type: string
+              description: Identifiant unique de l'appareil auquel s'abonner.
+              examples:
+                - example-device-id
+SubscribeResponse:
+  name: subscribe_res
+  title: Résultat d'abonnement
+  summary: Retourne les appareils auxquels la connexion est abonnée ou non.
+  payload:
+    type: object
+    required:
+      - cmd
+      - data
+    properties:
+      cmd:
+        type: string
+        const: subscribe_res
+      data:
+        type: object
+        properties:
+          success:
+            type: array
+            description: Appareils abonnés avec succès.
+            items:
+              $ref: "#/SubscriptionResult"
+          failed:
+            type: array
+            description: Appareils dont l'abonnement a échoué.
+            items:
+              $ref: "#/SubscriptionResult"
+SubscriptionResult:
+  type: object
+  required:
+    - did
+    - error_code
+    - msg
+  properties:
+    did:
+      type: string
+      description: Identifiant unique de l'appareil.
+      examples:
+        - example-device-id
+    error_code:
+      type: integer
+      description: "Code de résultat ; `0` indique un abonnement réussi."
+      examples:
+        - 0
+    msg:
+      type: string
+      description: Message associé au résultat.
+      examples:
+        - example-message
