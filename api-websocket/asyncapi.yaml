@@ -20,12 +20,16 @@ channels:
   websocketSession:
     address: null
     title: Session WebSocket
-    description: Login
+    description: Flux JSON partagé par toutes les opérations WebSocket.
     messages:
       loginRequest:
         $ref: "#/components/messages/LoginRequest"
       loginResponse:
         $ref: "#/components/messages/LoginResponse"
+      subscribeRequest:
+        $ref: "#/components/messages/SubscribeRequest"
+      subscribeResponse:
+        $ref: "#/components/messages/SubscribeResponse"
 operations:
   sendLoginRequest:
     action: send
@@ -41,6 +45,20 @@ operations:
     summary: Recevoir le résultat de l'authentification.
     messages:
       - $ref: "#/channels/websocketSession/messages/loginResponse"
+  sendSubscribeRequest:
+    action: send
+    channel:
+      $ref: "#/channels/websocketSession"
+    summary: S'abonner aux notifications d'un ou plusieurs appareils.
+    messages:
+      - $ref: "#/channels/websocketSession/messages/subscribeRequest"
+  receiveSubscribeResponse:
+    action: receive
+    channel:
+      $ref: "#/channels/websocketSession"
+    summary: Recevoir le résultat des abonnements demandés.
+    messages:
+      - $ref: "#/channels/websocketSession/messages/subscribeResponse"
 components:
   messages:
     LoginRequest:
@@ -72,12 +90,12 @@ components:
                 type: string
                 description: Identifiant utilisateur obtenu avec l'API HTTPS.
                 examples:
-                  - "<uid>"
+                  - example-user-id
               token:
                 type: string
                 description: Jeton utilisateur obtenu avec l'API HTTPS.
                 examples:
-                  - "<token>"
+                  - example-user-token
               p0_type:
                 type: string
                 const: attrs_v4
@@ -113,3 +131,78 @@ components:
               success:
                 type: boolean
                 description: "`true` si l'authentification a réussi."
+    SubscribeRequest:
+      name: subscribe_req
+      title: Demande d'abonnement
+      summary: Abonne la connexion aux notifications d'un ou plusieurs appareils.
+      payload:
+        type: object
+        required:
+          - cmd
+          - data
+        properties:
+          cmd:
+            type: string
+            const: subscribe_req
+          data:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              required:
+                - did
+              properties:
+                did:
+                  type: string
+                  description: Identifiant unique de l'appareil auquel s'abonner.
+                  examples:
+                    - example-device-id
+    SubscribeResponse:
+      name: subscribe_res
+      title: Résultat d'abonnement
+      summary: Retourne les appareils auxquels la connexion est abonnée ou non.
+      payload:
+        type: object
+        required:
+          - cmd
+          - data
+        properties:
+          cmd:
+            type: string
+            const: subscribe_res
+          data:
+            type: object
+            properties:
+              success:
+                type: array
+                description: Appareils abonnés avec succès.
+                items:
+                  $ref: "#/components/schemas/SubscriptionResult"
+              failed:
+                type: array
+                description: Appareils dont l'abonnement a échoué.
+                items:
+                  $ref: "#/components/schemas/SubscriptionResult"
+  schemas:
+    SubscriptionResult:
+      type: object
+      required:
+        - did
+        - error_code
+        - msg
+      properties:
+        did:
+          type: string
+          description: Identifiant unique de l'appareil.
+          examples:
+            - "example-device-id"
+        error_code:
+          type: integer
+          description: "Code de résultat ; `0` indique un abonnement réussi."
+          examples:
+            - 0
+        msg:
+          type: string
+          description: Message associé au résultat.
+          examples:
+            - example-message
