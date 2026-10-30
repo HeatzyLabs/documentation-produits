@@ -10,5 +10,6 @@ Cette documentation répertorie les points de données exposés par les API des 
 
 - [Heatzy Glow et Shine]({% link api-glow.md %})
 - [Heatzy Onyx]({% link api-onyx.md %})
-- [Heatzy Pilote]({% link api-pilote.md %})
 - [Heatzy Pilote Pro]({% link api-pilote-pro.md %})
+- [Heatzy Pilote]({% link api-pilote.md %})
+- [Heatzy Pilote - Guide des générations]({% link guide-generations-pilote.md %})
