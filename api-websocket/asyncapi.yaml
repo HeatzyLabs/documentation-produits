@@ -36,6 +36,10 @@ channels:
         $ref: "#/components/messages/WriteCommand"
       deviceNotification:
         $ref: "#/components/messages/DeviceNotification"
+      onlineStatus:
+        $ref: "#/components/messages/OnlineStatus"
+      invalidMessage:
+        $ref: "#/components/messages/InvalidMessage"
 operations:
   sendLoginRequest:
     $ref: "./paths/authentication.yaml#/sendLoginRequest"
@@ -51,6 +55,10 @@ operations:
     $ref: "./paths/device-commands.yaml#/sendWriteCommand"
   receiveDeviceNotification:
     $ref: "./paths/device-commands.yaml#/receiveDeviceNotification"
+  receiveOnlineStatus:
+    $ref: "./paths/events.yaml#/receiveOnlineStatus"
+  receiveInvalidMessage:
+    $ref: "./paths/events.yaml#/receiveInvalidMessage"
 components:
   messages:
     LoginRequest:
@@ -67,6 +75,10 @@ components:
       $ref: "./components/device-commands.yaml#/WriteCommand"
     DeviceNotification:
       $ref: "./components/device-commands.yaml#/DeviceNotification"
+    OnlineStatus:
+      $ref: "./components/events.yaml#/OnlineStatus"
+    InvalidMessage:
+      $ref: "./components/events.yaml#/InvalidMessage"
   schemas:
     SubscriptionResult:
       $ref: "./components/subscriptions.yaml#/SubscriptionResult"

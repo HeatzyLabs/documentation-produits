@@ -1,0 +1,68 @@
+OnlineStatus:
+  name: s2c_online_status
+  title: État de connexion d'un appareil
+  summary: Notifie la connexion ou déconnexion d'un appareil.
+  payload:
+    type: object
+    required:
+      - cmd
+      - data
+    properties:
+      cmd:
+        type: string
+        const: s2c_online_status
+      data:
+        type: object
+        required:
+          - did
+          - online
+        properties:
+          did:
+            type: string
+            description: Identifiant unique de l'appareil.
+            examples:
+              - example-device-id
+          passcode:
+            type: string
+            description: Passcode de l'appareil fourni par Gizwits.
+            examples:
+              - example-passcode
+          mac:
+            type: string
+            description: Adresse MAC de l'appareil.
+            examples:
+              - "00:00:00:00:00:00"
+          online:
+            type: boolean
+            description: "`true` lorsque l'appareil est connecté au serveur Gizwits."
+            examples:
+              - true
+InvalidMessage:
+  name: s2c_invalid_msg
+  title: Message WebSocket invalide
+  summary: Indique qu'un message envoyé par le client ne peut pas être traité.
+  payload:
+    type: object
+    required:
+      - cmd
+      - data
+    properties:
+      cmd:
+        type: string
+        const: s2c_invalid_msg
+      data:
+        type: object
+        required:
+          - error_code
+          - msg
+        properties:
+          error_code:
+            type: integer
+            description: Code d'erreur Gizwits.
+            examples:
+              - 1234
+          msg:
+            type: string
+            description: Message d'erreur lisible.
+            examples:
+              - example-error-message

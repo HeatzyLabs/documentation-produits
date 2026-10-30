@@ -32,17 +32,21 @@
           authentication,
           subscriptions,
           deviceCommands,
+          events,
           authenticationComponents,
           subscriptionComponents,
           deviceCommandComponents,
+          eventComponents,
         ] = await Promise.all([
           loadYaml("./asyncapi.yaml"),
           loadYaml("./paths/authentication.yaml"),
           loadYaml("./paths/subscriptions.yaml"),
           loadYaml("./paths/device-commands.yaml"),
+          loadYaml("./paths/events.yaml"),
           loadYaml("./components/authentication.yaml"),
           loadYaml("./components/subscriptions.yaml"),
           loadYaml("./components/device-commands.yaml"),
+          loadYaml("./components/events.yaml"),
         ]);
 
         specification.components = {
@@ -54,6 +58,8 @@
             ReadCommand: deviceCommandComponents.ReadCommand,
             WriteCommand: deviceCommandComponents.WriteCommand,
             DeviceNotification: deviceCommandComponents.DeviceNotification,
+            OnlineStatus: eventComponents.OnlineStatus,
+            InvalidMessage: eventComponents.InvalidMessage,
           },
           schemas: {
             SubscriptionResult: subscriptionComponents.SubscriptionResult,
@@ -64,6 +70,7 @@
           ...authentication,
           ...subscriptions,
           ...deviceCommands,
+          ...events,
         };
 
         const operationMessages = {
@@ -74,6 +81,8 @@
           sendReadCommand: "readCommand",
           sendWriteCommand: "writeCommand",
           receiveDeviceNotification: "deviceNotification",
+          receiveOnlineStatus: "onlineStatus",
+          receiveInvalidMessage: "invalidMessage",
         };
 
         for (const [operationId, messageId] of Object.entries(operationMessages)) {

@@ -1,0 +1,14 @@
+receiveOnlineStatus:
+  action: receive
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Recevoir le changement d'état de connexion d'un appareil.
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/onlineStatus"
+receiveInvalidMessage:
+  action: receive
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Recevoir une erreur de format ou de commande WebSocket.
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/invalidMessage"
