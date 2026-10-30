@@ -40,6 +40,10 @@ channels:
         $ref: "#/components/messages/OnlineStatus"
       invalidMessage:
         $ref: "#/components/messages/InvalidMessage"
+      heartbeatPing:
+        $ref: "#/components/messages/HeartbeatPing"
+      heartbeatPong:
+        $ref: "#/components/messages/HeartbeatPong"
 operations:
   sendLoginRequest:
     $ref: "./paths/authentication.yaml#/sendLoginRequest"
@@ -59,6 +63,10 @@ operations:
     $ref: "./paths/events.yaml#/receiveOnlineStatus"
   receiveInvalidMessage:
     $ref: "./paths/events.yaml#/receiveInvalidMessage"
+  sendHeartbeatPing:
+    $ref: "./paths/heartbeat.yaml#/sendHeartbeatPing"
+  receiveHeartbeatPong:
+    $ref: "./paths/heartbeat.yaml#/receiveHeartbeatPong"
 components:
   messages:
     LoginRequest:
@@ -79,6 +87,10 @@ components:
       $ref: "./components/events.yaml#/OnlineStatus"
     InvalidMessage:
       $ref: "./components/events.yaml#/InvalidMessage"
+    HeartbeatPing:
+      $ref: "./components/heartbeat.yaml#/HeartbeatPing"
+    HeartbeatPong:
+      $ref: "./components/heartbeat.yaml#/HeartbeatPong"
   schemas:
     SubscriptionResult:
       $ref: "./components/subscriptions.yaml#/SubscriptionResult"

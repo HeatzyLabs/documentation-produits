@@ -1,0 +1,24 @@
+HeartbeatPing:
+  name: ping
+  title: Heartbeat envoyé au serveur
+  summary: Maintient la connexion WebSocket active.
+  payload:
+    type: object
+    required:
+      - cmd
+    properties:
+      cmd:
+        type: string
+        const: ping
+HeartbeatPong:
+  name: pong
+  title: Réponse au heartbeat
+  summary: Confirme que le serveur Gizwits a reçu le heartbeat.
+  payload:
+    type: object
+    required:
+      - cmd
+    properties:
+      cmd:
+        type: string
+        const: pong

@@ -1,0 +1,17 @@
+sendHeartbeatPing:
+  action: send
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Maintenir la connexion WebSocket active.
+  description: |
+    À envoyer après l'authentification, à l'intervalle défini par
+    `heartbeat_interval` (180 secondes maximum).
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/heartbeatPing"
+receiveHeartbeatPong:
+  action: receive
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Confirmer la réception du heartbeat par Gizwits.
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/heartbeatPong"
