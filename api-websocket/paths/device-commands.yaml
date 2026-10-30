@@ -1,0 +1,21 @@
+sendReadCommand:
+  action: send
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Demander les points de données d'un appareil.
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/readCommand"
+sendWriteCommand:
+  action: send
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Envoyer une commande à un appareil.
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/writeCommand"
+receiveDeviceNotification:
+  action: receive
+  channel:
+    $ref: "../asyncapi.yaml#/channels/websocketSession"
+  summary: Recevoir l'état ou la réponse d'un appareil.
+  messages:
+    - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/deviceNotification"

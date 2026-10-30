@@ -1,0 +1,117 @@
+ReadCommand:
+  name: c2s_read
+  title: Lecture de data points
+  summary: Demande l'état actif d'un appareil.
+  payload:
+    type: object
+    required:
+      - cmd
+      - data
+    properties:
+      cmd:
+        type: string
+        const: c2s_read
+      req_sn:
+        type: integer
+        description: Numéro optionnel de corrélation de la requête.
+        examples:
+          - 1
+      data:
+        type: object
+        required:
+          - did
+        properties:
+          did:
+            type: string
+            description: Identifiant unique de l'appareil.
+            examples:
+              - example-device-id
+          names:
+            type: array
+            description: |
+              Data points demandés. Laisser vide pour demander tous les data
+              points des produits Wi-Fi Heatzy.
+            items:
+              type: string
+            examples:
+              - [mode]
+WriteCommand:
+  name: c2s_write
+  title: Commande d'un appareil
+  summary: Modifie un ou plusieurs data points d'un appareil.
+  payload:
+    type: object
+    required:
+      - cmd
+      - data
+    properties:
+      cmd:
+        type: string
+        const: c2s_write
+      req_sn:
+        type: integer
+        description: Numéro optionnel de corrélation de la requête.
+        examples:
+          - 1
+      data:
+        type: object
+        required:
+          - did
+          - attrs
+        properties:
+          did:
+            type: string
+            description: Identifiant unique de l'appareil.
+            examples:
+              - example-device-id
+          attrs:
+            type: object
+            description: |
+              Data points à modifier. Les clés et valeurs autorisées dépendent
+              du produit.
+            additionalProperties: true
+            examples:
+              - mode: 2
+DeviceNotification:
+  name: s2c_noti
+  title: Notification d'un appareil
+  summary: Retourne l'état de l'appareil ou le résultat d'une commande.
+  payload:
+    type: object
+    required:
+      - cmd
+      - data
+    properties:
+      cmd:
+        type: string
+        const: s2c_noti
+      req_sn:
+        type: integer
+        description: |
+          Numéro à acquitter avec `c2s_ack` lorsqu'il est fourni par le serveur.
+        examples:
+          - 1
+      res_sn:
+        type: integer
+        description: |
+          Numéro de corrélation qui reprend le `req_sn` de `c2s_read` ou
+          `c2s_write`.
+        examples:
+          - 1
+      data:
+        type: object
+        required:
+          - did
+          - attrs
+        properties:
+          did:
+            type: string
+            description: Identifiant unique de l'appareil.
+            examples:
+              - example-device-id
+          attrs:
+            type: object
+            description: Data points retournés par l'appareil.
+            additionalProperties: true
+            examples:
+              - mode: 2

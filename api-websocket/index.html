@@ -27,12 +27,22 @@
       }
 
       async function renderDocumentation() {
-        const [specification, authentication, subscriptions, authenticationComponents, subscriptionComponents] = await Promise.all([
+        const [
+          specification,
+          authentication,
+          subscriptions,
+          deviceCommands,
+          authenticationComponents,
+          subscriptionComponents,
+          deviceCommandComponents,
+        ] = await Promise.all([
           loadYaml("./asyncapi.yaml"),
           loadYaml("./paths/authentication.yaml"),
           loadYaml("./paths/subscriptions.yaml"),
+          loadYaml("./paths/device-commands.yaml"),
           loadYaml("./components/authentication.yaml"),
           loadYaml("./components/subscriptions.yaml"),
+          loadYaml("./components/device-commands.yaml"),
         ]);
 
         specification.components = {
@@ -41,6 +51,9 @@
             LoginResponse: authenticationComponents.LoginResponse,
             SubscribeRequest: subscriptionComponents.SubscribeRequest,
             SubscribeResponse: subscriptionComponents.SubscribeResponse,
+            ReadCommand: deviceCommandComponents.ReadCommand,
+            WriteCommand: deviceCommandComponents.WriteCommand,
+            DeviceNotification: deviceCommandComponents.DeviceNotification,
           },
           schemas: {
             SubscriptionResult: subscriptionComponents.SubscriptionResult,
@@ -50,6 +63,7 @@
         specification.operations = {
           ...authentication,
           ...subscriptions,
+          ...deviceCommands,
         };
 
         const operationMessages = {
@@ -57,6 +71,9 @@
           receiveLoginResponse: "loginResponse",
           sendSubscribeRequest: "subscribeRequest",
           receiveSubscribeResponse: "subscribeResponse",
+          sendReadCommand: "readCommand",
+          sendWriteCommand: "writeCommand",
+          receiveDeviceNotification: "deviceNotification",
         };
 
         for (const [operationId, messageId] of Object.entries(operationMessages)) {

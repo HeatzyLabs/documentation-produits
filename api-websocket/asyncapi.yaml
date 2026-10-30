@@ -30,6 +30,12 @@ channels:
         $ref: "#/components/messages/SubscribeRequest"
       subscribeResponse:
         $ref: "#/components/messages/SubscribeResponse"
+      readCommand:
+        $ref: "#/components/messages/ReadCommand"
+      writeCommand:
+        $ref: "#/components/messages/WriteCommand"
+      deviceNotification:
+        $ref: "#/components/messages/DeviceNotification"
 operations:
   sendLoginRequest:
     $ref: "./paths/authentication.yaml#/sendLoginRequest"
@@ -39,6 +45,12 @@ operations:
     $ref: "./paths/subscriptions.yaml#/sendSubscribeRequest"
   receiveSubscribeResponse:
     $ref: "./paths/subscriptions.yaml#/receiveSubscribeResponse"
+  sendReadCommand:
+    $ref: "./paths/device-commands.yaml#/sendReadCommand"
+  sendWriteCommand:
+    $ref: "./paths/device-commands.yaml#/sendWriteCommand"
+  receiveDeviceNotification:
+    $ref: "./paths/device-commands.yaml#/receiveDeviceNotification"
 components:
   messages:
     LoginRequest:
@@ -49,6 +61,12 @@ components:
       $ref: "./components/subscriptions.yaml#/SubscribeRequest"
     SubscribeResponse:
       $ref: "./components/subscriptions.yaml#/SubscribeResponse"
+    ReadCommand:
+      $ref: "./components/device-commands.yaml#/ReadCommand"
+    WriteCommand:
+      $ref: "./components/device-commands.yaml#/WriteCommand"
+    DeviceNotification:
+      $ref: "./components/device-commands.yaml#/DeviceNotification"
   schemas:
     SubscriptionResult:
       $ref: "./components/subscriptions.yaml#/SubscriptionResult"
