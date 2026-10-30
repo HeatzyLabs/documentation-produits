@@ -11,7 +11,7 @@ defaults:
       layout: default
 
 url: "https://heatzylabs.github.io"
-baseurl: "/documentation-produits/api-produits"
+baseurl: "/documentation-produits/doc-produits"
 
 aux_links:
   Dépôt GitHub: https://github.com/HeatzyLabs/documentation-produits

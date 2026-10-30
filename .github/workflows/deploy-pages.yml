@@ -26,13 +26,13 @@ jobs:
         with:
           ruby-version: '3.3'
           bundler-cache: true
-          working-directory: api-produits
+          working-directory: doc-produits
 
       - name: Build product documentation
         run: >-
           bundle exec jekyll build
-          --destination ../_site/api-produits
-        working-directory: api-produits
+          --destination ../_site/doc-produits
+        working-directory: doc-produits
 
       - name: Include documentation home page
         run: |
