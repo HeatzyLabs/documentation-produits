@@ -46,6 +46,60 @@ get:
                 error_code: 9003
                 detail_message: null
 
+post:
+  tags:
+    - Utilisateurs
+  summary: Créer un utilisateur
+  description: Crée un compte utilisateur avec une adresse e-mail et un mot de passe.
+  operationId: createUser
+  security:
+    - GizwitsApplicationId: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../openapi.yaml#/components/schemas/UserCreateRequest
+        example:
+          email: utilisateur@exemple.com
+          password: mot-de-passe
+  responses:
+    '201':
+      description: Utilisateur créé avec succès.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/LoginSuccess
+          example:
+            token: example-user-token
+            uid: example-user-id
+            expire_at: 1801237261
+    '400':
+      description: Adresse e-mail ou mot de passe invalide.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/UserError
+          examples:
+            emailAlreadyExists:
+              summary: Adresse e-mail déjà utilisée
+              value:
+                error_message: email already exists!
+                error_code: 9022
+                detail_message: 该邮箱已绑定其他帐号
+            weakPassword:
+              summary: Mot de passe trop faible
+              value:
+                error_message: weak password not allowed.
+                error_code: 9075
+                detail_message: password needs to be set more than 6 bits
+            invalidEmail:
+              summary: Adresse e-mail invalide
+              value:
+                error_message: form_invalid
+                error_code: 9015
+                detail_message: email address is not valid
+
 put:
   tags:
     - Utilisateurs

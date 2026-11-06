@@ -59,6 +59,8 @@ components:
       $ref: ./components/schemas/users.yaml#/UserError
     UserPasswordChangeRequest:
       $ref: ./components/schemas/users.yaml#/UserPasswordChangeRequest
+    UserCreateRequest:
+      $ref: ./components/schemas/users.yaml#/UserCreateRequest
     PasswordResetRequest:
       $ref: ./components/schemas/users.yaml#/PasswordResetRequest
     UserPasswordChangeResponse:
