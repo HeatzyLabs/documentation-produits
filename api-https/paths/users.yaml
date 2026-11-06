@@ -100,6 +100,29 @@ post:
                 error_code: 9015
                 detail_message: email address is not valid
 
+delete:
+  tags:
+    - Utilisateurs
+  summary: Supprimer le compte utilisateur
+  description: Supprime le compte associé au jeton utilisateur. Aucun corps de requête n'est envoyé.
+  operationId: deleteUser
+  security:
+    - GizwitsApplicationId: []
+      GizwitsUserToken: []
+  responses:
+    '204':
+      description: Compte supprimé avec succès. La réponse ne contient pas de corps.
+    '400':
+      description: Jeton utilisateur invalide.
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.yaml#/components/schemas/UserError
+          example:
+            error_message: token invalid!
+            error_code: 9004
+            detail_message: null
+
 put:
   tags:
     - Utilisateurs
