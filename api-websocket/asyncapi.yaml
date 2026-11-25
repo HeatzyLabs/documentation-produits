@@ -36,6 +36,8 @@ channels:
         $ref: "#/components/messages/WriteCommand"
       deviceNotification:
         $ref: "#/components/messages/DeviceNotification"
+      deviceAcknowledgement:
+        $ref: "#/components/messages/DeviceAcknowledgement"
       onlineStatus:
         $ref: "#/components/messages/OnlineStatus"
       invalidMessage:
@@ -59,6 +61,8 @@ operations:
     $ref: "./paths/device-commands.yaml#/sendWriteCommand"
   receiveDeviceNotification:
     $ref: "./paths/device-commands.yaml#/receiveDeviceNotification"
+  sendDeviceAcknowledgement:
+    $ref: "./paths/device-commands.yaml#/sendDeviceAcknowledgement"
   receiveOnlineStatus:
     $ref: "./paths/events.yaml#/receiveOnlineStatus"
   receiveInvalidMessage:
@@ -83,6 +87,8 @@ components:
       $ref: "./components/device-commands.yaml#/WriteCommand"
     DeviceNotification:
       $ref: "./components/device-commands.yaml#/DeviceNotification"
+    DeviceAcknowledgement:
+      $ref: "./components/device-commands.yaml#/DeviceAcknowledgement"
     OnlineStatus:
       $ref: "./components/events.yaml#/OnlineStatus"
     InvalidMessage:

@@ -89,13 +89,14 @@ DeviceNotification:
         type: integer
         description: |
           Numéro à acquitter avec `c2s_ack` lorsqu'il est fourni par le serveur.
+          Ne peut pas coexister avec `res_sn`.
         examples:
           - 1
       res_sn:
         type: integer
         description: |
           Numéro de corrélation qui reprend le `req_sn` de `c2s_read` ou
-          `c2s_write`.
+          `c2s_write`. Ne peut pas coexister avec `req_sn`.
         examples:
           - 1
       data:
@@ -115,3 +116,27 @@ DeviceNotification:
             additionalProperties: true
             examples:
               - mode: 2
+DeviceAcknowledgement:
+  name: c2s_ack
+  title: Accusé de réception d'une notification
+  summary: Acquitte une notification `s2c_noti` reçue avec un `req_sn`.
+  payload:
+    type: object
+    required:
+      - cmd
+      - res_sn
+      - did
+    properties:
+      cmd:
+        type: string
+        const: c2s_ack
+      res_sn:
+        type: integer
+        description: Valeur du `req_sn` présent dans la notification `s2c_noti` reçue.
+        examples:
+          - 1
+      did:
+        type: string
+        description: Identifiant unique de l'appareil de la notification reçue.
+        examples:
+          - example-device-id
