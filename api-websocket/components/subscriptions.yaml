@@ -47,7 +47,10 @@ SubscribeResponse:
               $ref: "#/SubscriptionResult"
           failed:
             type: array
-            description: Appareils dont l'abonnement a échoué.
+            description: |
+              Appareils dont l'abonnement a échoué. Par exemple, Gizwits
+              retourne `1004` avec le message `device not bound!` lorsque
+              l'appareil n'est pas lié au compte authentifié.
             items:
               $ref: "#/SubscriptionResult"
 SubscriptionResult:
@@ -64,11 +67,15 @@ SubscriptionResult:
         - example-device-id
     error_code:
       type: integer
-      description: "Code de résultat ; `0` indique un abonnement réussi."
+      description: |
+        Code de résultat : `0` indique un abonnement réussi. Le code `1004`
+        signifie que l'appareil n'est pas lié au compte authentifié.
       examples:
         - 0
+        - 1004
     msg:
       type: string
       description: Message associé au résultat.
       examples:
-        - example-message
+        - ok!
+        - device not bound!
