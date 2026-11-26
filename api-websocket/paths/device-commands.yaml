@@ -16,7 +16,11 @@ receiveDeviceNotification:
   action: receive
   channel:
     $ref: "../asyncapi.yaml#/channels/websocketSession"
-  summary: Recevoir l'état ou la réponse d'un appareil.
+  summary: Recevoir l'état, une mise à jour ou la réponse d'un appareil.
+  description: |
+    Une notification peut être émise juste après `login_res` lorsque
+    `auto_subscribe` est défini à `true`, puis à chaque mise à jour d'état.
+    Elle ne nécessite un `c2s_ack` que si elle contient un champ `req_sn`.
   messages:
     - $ref: "../asyncapi.yaml#/channels/websocketSession/messages/deviceNotification"
 sendDeviceAcknowledgement:

@@ -45,7 +45,10 @@ LoginRequest:
             default: 60
           auto_subscribe:
             type: boolean
-            description: Active l'abonnement automatique à tous les appareils liés.
+            description: |
+              Active l'abonnement automatique à tous les appareils liés. Après
+              une connexion réussie, le serveur peut envoyer une
+              notification `s2c_noti` avec l'état de chaque appareil.
             default: false
 LoginResponse:
   name: login_res

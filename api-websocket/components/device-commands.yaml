@@ -20,6 +20,7 @@ ReadCommand:
         type: object
         required:
           - did
+          - names
         properties:
           did:
             type: string
@@ -29,12 +30,18 @@ ReadCommand:
           names:
             type: array
             description: |
-              Data points demandés. Laisser vide pour demander tous les data
-              points des produits Wi-Fi Heatzy.
+              Data points demandés pour les produits Gizwits à longueur
+              variable : le serveur ne conserve alors qu'une partie des data
+              points et `names` permet de sélectionner ceux attendus.
+
+              Les produits Heatzy sont à longueur fixe et renvoient tous leurs
+              data points à chaque mise à jour. Pour eux, envoyer un tableau
+              vide (`[]`) : le champ est obligatoire mais son contenu est
+              inutile.
             items:
               type: string
             examples:
-              - [mode]
+              - []
 WriteCommand:
   name: c2s_write
   title: Commande d'un appareil
